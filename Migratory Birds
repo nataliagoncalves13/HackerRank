@@ -1,0 +1,78 @@
+'use strict';
+
+const fs = require('fs');
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', function(inputStdin) {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', function() {
+    inputString = inputString.split('\n');
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
+}
+
+/*
+ * Complete the 'migratoryBirds' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts INTEGER_ARRAY arr as parameter.
+ */
+
+function migratoryBirds(arr) {
+    let birdCount = {};
+    
+    arr.forEach(bird => {
+        birdCount[bird] = (birdCount[bird] || 0) + 1;
+    });
+
+    let mCount = 0;
+    let mfBird = 0;
+    for (let birdId in birdCount) {
+        if (birdCount[birdId] > mCount) {
+            mCount = birdCount[birdId];
+            mfBird = birdId;
+        } else if (birdCount[birdId] == mCount && birdId < mfBird) {
+            mfBird = birdId;
+        }
+    }
+
+    return mfBird;
+
+}
+
+function main() {
+    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+
+    const arrCount = parseInt(readLine().trim(), 10);
+
+    const arr = readLine().replace(/\s+$/g, '').split(' ').map(arrTemp => parseInt(arrTemp, 10));
+
+    const result = migratoryBirds(arr);
+
+    ws.write(result + '\n');
+
+    ws.end();
+}
+
+/*Explicação:
+O código conta quantas vezes cada tipo de pássaro aparece em um grupo e guarda isso em um lugar. 
+Depois ele verifica qual tipo de pássaro é visto mais vezes, e se houver um empate, escolhe o tipo de pássaro com o menor número de ID. 
+Aí no console ele diz qual tipo de pássaro é o mais comum.
+*/
+
+/*Explanation:
+The code counts how many times each type of bird appears in a group and stores this in one place.
+Then it checks which type of bird is seen most often, and if there is a tie, it chooses the type of bird with the lowest ID number.
+Then on the console it says which type of bird is the most common.
+*/
