@@ -1,0 +1,51 @@
+'use strict';
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', function(inputStdin) {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', function() {
+    inputString = inputString.split('\n');
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
+}
+
+/*
+ * Complete the 'staircase' function below.
+ *
+ * The function accepts INTEGER n as parameter.
+ */
+
+function staircase(n) {
+        for (let i = 1; i <= n; i++) {
+        let spaces = ' '.repeat(n - i);
+        let hashes = '#'.repeat(i);
+        console.log(spaces + hashes);
+    }
+}
+
+function main() {
+    const n = parseInt(readLine().trim(), 10);
+
+    staircase(n);
+}
+
+/*Explicação: 
+let spaces cria uma string contendo espaços em branco, com um número de espaços igual a n - i.
+e let hashes faz a mesma coisa com # só que com o número de espaços igual a i
+por fim o console combina as 2 variáveis e faz a escada*/
+
+/*Explanation:
+let spaces creates a string containing whitespace, with a number of spaces equal to n - i.
+and let hashes does the same thing with # but with the number of spaces equal to i
+Finally, the console combines the 2 variables and it makes the ladder*/
